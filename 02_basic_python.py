@@ -1,3 +1,5 @@
+import pandas as pd
+
 response_time = 2000  # int, contoh nilai dari kolom 'Response Time (ms)'
 cpu_usage = 85.5  # float, contoh nilai dari kolom 'CPU Usage (%)'
 jenis_error = "NullPointerException"  # str, contoh nilai dari kolom 'Jenis Error'
@@ -20,7 +22,9 @@ else:
 for jenis in jenis_error_list:
     print(jenis)
 
-def hitung_rata_rata_response_time(jenis_error):
+df = pd.read_csv('data/error_log_updated.csv')
+
+def hitung_rata_rata_response_time(df, jenis_error):
   """
   Fungsi ini menghitung rata-rata response time 
   untuk jenis error tertentu.
@@ -30,7 +34,7 @@ def hitung_rata_rata_response_time(jenis_error):
   return rata_rata
 
 # Memanggil fungsi
-rata_rata_connection_error = hitung_rata_rata_response_time('Connection Error')
+rata_rata_connection_error = hitung_rata_rata_response_time(df, 'Connection Error')
 print(rata_rata_connection_error)
 
 # Mengubah kolom 'Severity Level' menjadi numerik (1-6)
@@ -44,7 +48,7 @@ class ErrorLog:
     self.timestamp = timestamp
     self.jenis_error = jenis_error
     self.response_time = response_time
-
+    
   def is_critical(self):
     return self.response_time > 3000
 
